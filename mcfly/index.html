@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+  <title>McFlyify - Domains19</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Orbitron:400,900');
+
+    #photo {
+      margin: auto;
+    }
+
+    #console {
+      font-family: 'Courier New';
+      fill: rgba(255, 255, 255, 0.8);
+      font-size: 8px;
+    }
+
+    .call2action {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: 18px;
+      transform: rotate(2deg);
+      fill: #FFE629;
+      stroke: #02B0F0;
+      stroke-width: 0.5px;
+    }
+
+    .title {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      -webkit-text-stroke: 1px #02B0F0;
+
+      background: -webkit-linear-gradient(#C32128, #FFE629);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -ms-transform: matrix(1, 0, 0.5, 1, 0, 0);
+      /* IE 9 */
+      -webkit-transform: matrix(1, 0, 0.5, 1, 0, 0);
+      /* Safari */
+      transform: matrix(1, 0, 0.5, 1, 0, 0);
+      /* Standard syntax */
+      margin: 0;
+      height: 90px;
+    }
+
+    #player {
+      margin: auto;
+    }
+
+    #capture {
+      position: absolute;
+      margin: auto;
+      bottom: 20px;
+      left: 40%;
+    }
+
+    #target,
+    #cam_area {
+      border: 2px dashed #9b9b9b;
+      border-radius: 3px;
+      cursor: pointer;
+      min-height: 240px;
+      position: relative;
+      transition: background-color ease .5s, border-color ease .5s;
+      -moz-transition: background-color ease .5s, border-color ease .5s;
+      -o-transition: background-color ease .5s, border-color ease .5s;
+      -webkit-transition: background-color ease 5s, border-color ease .5s;
+      width: 100%;
+      background: #f7f7f7 right 20px center no-repeat;
+    }
+
+    #cam_error {
+      height: 240px
+    }
+
+    .dropzone-text {
+      font-size: 1.2em;
+      line-height: 1.5em;
+      width: 100%;
+    }
+
+    .dropzone-text-mobile {
+      display: none;
+      padding-top: 10px;
+      text-align: center;
+    }
+
+    #click-to-select-file {
+      bottom: 0;
+      cursor: pointer;
+      left: 0;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    .progress {
+      margin-top: 0px;
+      background-color: #FFE629;
+    }
+
+    .progress .determinate,
+    .progress .indeterminate {
+      background-color: #C32128;
+    }
+
+    #dload {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <div class="row center">
+        <h1 class="header center orange-text title">McFlyify</h1>
+        <h5 class="header col s12 light">A <a href="https://domains.reclaimhosting.com/" target="_blank">Domains Conference</a> Google Cloud Vision Experiment</h5>
+      </div>
+      <div class="row center">
+        <div id="photo">
+          <svg id="anima" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 484 253" class="col s12">
+            <defs>
+              <filter id="filter2">
+                <feGaussianBlur stdDeviation="3"></feGaussianBlur>
+              </filter>
+            </defs>
+            <mask id="mask2">
+              <ellipse cx="281" cy="93" rx="15" ry="13" fill="white" filter="url(#filter2)"></ellipse>
+            </mask>
+            <image id="frm" x="0" y="0" width="484" height="253" xlink:href="img/mcfly.gif" />
+            <image id="cropped_face" xlink:href="" x="268" y="80" width="25" height="26" mask="url(#mask2)" />
+            <rect class="call2action" x="270" y="74" width="25" height="26"
+              style="fill:#FFE629;stroke-width:1;stroke:#ccc"></rect>
+            <text class="call2action" x="280" y="110" text-anchor="middle" alignment-baseline="central">
+              <tspan x="290" dy=".6em">Insert</tspan>
+              <tspan x="290" dy=".9em">your face</tspan>
+              <tspan x="290" dy=".9em">here...</tspan>
+            </text>
+            <rect x="5" y="130" fill="rgba(0,0,0,.8)" height="120" width="205" class="txt_out" style="display:none;">
+            </rect>
+            <text id="console" x="10" y="140" text-anchor="left" alignment-baseline="central" class="txt_out"
+              style="font-family: 'Courier New';fill: rgba(255,255,255,0.8);font-size: 8px;display:none;">
+              <tspan x="10" dy=".6em" style="display:none">Computer says...</tspan>
+            </text>
+            <image id="source_img" x="10" y="10" width="160" height="120" xlink:href="" />
+            <image id="render_img" x="10" y="10" width="160" height="120" xlink:href="" />
+          </svg>
+        </div>
+        <canvas id="face" width=25 height=26 style="display:none"></canvas>
+        <div class="row center">
+          <div class="col s12">
+            <div class="progress">
+              <div class="indeterminate"></div>
+            </div>
+            <a id="dload" style="display: none" class="waves-effect waves-light red btn"
+              download="domains19-mcfly.gif"><i class="material-icons right">cloud_download</i>Download</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="container">
+    <div class="section" id="warn">
+      <div class="row">
+        <div class="col s12 m12">
+          <div class="valign-wrapper">
+            <div class="center-align" style="width: 100%;">
+              <img src=" img/surv.gif" title="Warning - Surveillance in operation" />
+              <div style="max-width:484px; margin: auto;">By using this site you permit images captured and/or uploaded
+                to be sent to the Google Cloud Vision API</div>
+              <p>
+                <label>
+                  <input id="consent" type="checkbox" class="filled-in" disabled />
+                  <span>I agree to the terms of use</span>
+                </label>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="get-face" style="display:none;">
+
+      <!--   Icon Section   -->
+      <div class="row">
+        <div class="col s12 m5">
+          <div class="icon-block">
+            <h5 class="center"><i class="material-icons">insert_drive_file</i> File Upload</h5>
+
+            <div id="target" class=" valign-wrapper">
+              <div class="dropzone-text center-align">
+                Drag selfie image file here or<br class="">Browse from your computer
+              </div>
+              <div class="dropzone-text-mobile">
+                Upload your image
+              </div>
+              <label id="click-to-select-file" for="file-input" class=""></label>
+              <input type="file" id="file-input" hidden="" class="">
+            </div>
+          </div>
+        </div>
+
+        <div class="col s12 m2">
+          <div class="icon-block">
+            <h5 class="center">OR</h5>
+          </div>
+        </div>
+
+        <div class="col s12 m5">
+          <div class="icon-block">
+            <h5 class="center"><i class="material-icons">photo_camera</i> Take a Picture</h5>
+            <div id="cam_area" class="center-align">
+              <video id="player" width=320 height=240 poster="img/loader.gif" autoplay class="valign-wrapper"></video>
+              <button id="capture" class="btn waves-effect waves-light"><i
+                  class="material-icons left">camera</i>Snap</button>
+              <div id="cam_error" class=" valign-wrapper" style="display: none">
+                <div class="dropzone-text center-align">Camera not available</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="result">
+      <div class="row">
+        <div class="col s12 m6">
+          <canvas id="canvas" width=320 height=240  class="center-align"></canvas>
+
+        </div>
+        <div class="col s12 m6">
+          <code style="white-space:pre" id="results"></code>
+        </div>
+      </div>
+    </div>
+
+
+    <br><br>
+  </div>
+
+  <footer class="page-footer orange">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">About</h5>
+          <p class="grey-text text-lighten-4">A 'shit and giggles' production by @mhawksey, your friendly neighbourhood creep trying to highlight concerns about face detection/recognition services ... go #TeamLuddite <code>HISTORICAL</code></p>
+
+
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Background</h5>
+          <ul>
+            <li><a class="white-text" href="https://mashe.hawksey.info/?p=18959">Related Post</a></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Source</h5>
+          <ul>
+            <li><a class="white-text" href="https://github.com/mhawksey/domains19/mcfly">View on Github</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+        Made by <a class="orange-text text-lighten-3" href="http://mashe.hawksey.info">@mhawksey</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/gif.js"></script>
+</body>
+
+</html>
